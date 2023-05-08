@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ToDo WebApp</title>
+
+        <script
+          src="https://kit.fontawesome.com/a8162db7fd.js"
+          crossorigin="anonymous"
+        ></script>
+        
+        <link rel="stylesheet" href="/css/home.css" />
+  </head>
+     <body>
+          <h1 id="page-heading">
+            <i class="fa-sharp fa-solid fa-rectangle-list"></i>
+            ToDo WebApp
+          </h1>
+
+         <div id="main-container">
+          <!--To create Todo in database-->
+               <div class="form">
+                 <form action="/todo/add-todo" method="post">
+                      <label for="name">Enter Task :</label>
+                      <input
+                        type="text"
+                        name="name"
+                        id="todo-task"
+                        required
+                        placeholder="Enter Your Task !"
+                      /> <br>
+                      
+                      <label for="date" id="date-lebel">Select Date :</label>
+                      <input type="date" name="date" required id="date"> 
+                      
+                      <div id="category-container">
+                           <label for="category" id="category-label">Select Category :</label>
+                               <select name="category" id="category">
+                                 <% for (item of categoryList) {%>
+                                   <option value="<%= item %>"> <%= item %> </option>
+                                 <%}%>
+                               </select><br>
+                           </div>
+                      <button type="submit" id="add-btn">Add Task</button>
+                </form>
+           </div>
+
+           <!--To get todo from the database-->
+                <ul>
+                  <% for (let i of listItems) {%>
+                     <li data-id="<%= i._id %>" id="list">
+                      <div id="list-container">
+                             <h4><%= i.name %></h4>
+                             <h4><%= i.category %></h4>
+                             <h4><%= i.date %></h4>
+
+                            <a href="/todo/delete-task/<%= i._id %>">
+                            <button id="delete-todo">Delete ToDo</button>
+                            </a>
+                             <p>
+                              <!--For updating status-->
+                               <select name="status" class="todo_status" id="select_status">
+                                      <% if (i.status == 0) {%>
+                                         <option value="1">Done</option>
+                                         <option value="0" selected>Not Done</option>
+                                      <%}%>
+                                      <% if (i.status == 1) {%>
+                                         <option value="1" selected>Done</option>
+                                         <option value="0">Not Done</option>
+                                       <%}%>
+                                  </select>
+                                </p>
+                            </div>                              
+                         </li>
+                  <% } %>
+              </ul>
+        </div>
+    <script type="text/javaScript" src="/js/index.js"></script>
+  </body>
+</html>
